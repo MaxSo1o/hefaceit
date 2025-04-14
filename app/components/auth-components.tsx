@@ -1,5 +1,6 @@
 'use client'
 import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
 
 export default function Profile() {
     const { data: session } = useSession();
@@ -11,10 +12,12 @@ export default function Profile() {
     return (
         <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow">
             <div className="flex items-center gap-4 mb-4">
-                <img
+                <Image
                     src={session.user?.image}
                     alt="Аватар"
                     className="w-16 h-16 rounded-full"
+                    width={64}
+                    height={64}
                 />
                 <div>
                     <h2 className="text-xl font-bold">{session.user?.name}</h2>
