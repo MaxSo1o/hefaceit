@@ -2,14 +2,13 @@ import { signIn, signOut } from "@/auth";
 import React from "react";
 
 export function SignIn({
-                           provider,
                            ...props
                        }: { provider?: string } & React.ComponentPropsWithRef<'button'>) {
     return (
         <form
             action={async () => {
                 "use server"
-                await signIn(provider)
+                await signIn('faceit')
             }}
         >
             <button {...props}>Sign In</button>
