@@ -26,4 +26,4 @@ WORKDIR /app
 EXPOSE 3000
 
 # Команда запуска
-RUN npm run start
+CMD ["npm", "start"]
