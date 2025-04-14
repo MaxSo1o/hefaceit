@@ -2,7 +2,7 @@
 FROM node:18-alpine AS builder
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /
 
 # Copy package.json and package-lock.json (or yarn.lock)
 COPY package*.json ./
