@@ -1,18 +1,18 @@
-'use client'
-import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
+import {auth} from "@/auth";
+import {SignIn} from "@/app/components/ButtonAuth";
 
-export default function Profile() {
-    const { data: session } = useSession();
+export default async function Profile() {
+    const session = await auth()
 
-    if (!session) {
-        return <p>Вы не авторизованы</p>;
+    if (!session?.user) {
+        return <SignIn/>
     }
 
     return (
         <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow">
             <div className="flex items-center gap-4 mb-4">
-                <Image
+            <Image
                     src={`${session.user?.image}`}
                     alt="Аватар"
                     className="w-16 h-16 rounded-full"
@@ -24,13 +24,6 @@ export default function Profile() {
                     <p className="text-gray-600">{session.user?.email}</p>
                 </div>
             </div>
-
-            <button
-                onClick={() => signOut()}
-                className="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-            >
-                Выйти
-            </button>
         </div>
     );
 }
