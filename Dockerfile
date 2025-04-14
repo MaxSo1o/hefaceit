@@ -2,7 +2,7 @@
 FROM node:18-alpine AS builder
 
 # Set the working directory in the container
-WORKDIR /
+WORKDIR /hefaceit
 
 # Copy package.json and package-lock.json (or yarn.lock)
 COPY package*.json ./
@@ -20,21 +20,17 @@ RUN npm run build
 
 # Use a smaller image for production
 FROM node:18-alpine AS runner
-WORKDIR /app
+WORKDIR /hefaceit
 
 # Copy only necessary files from builder
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/yarn.lock ./
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /hefaceit/package*.json ./
+COPY --from=builder /hefaceit/.next ./.next
+COPY --from=builder /hefaceit/public ./public
+COPY --from=builder /hefaceit/node_modules ./node_modules
 
-# Environment variables
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
 
 # Expose the port the app runs on
 EXPOSE 3000
 
 # Command to run the application
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
