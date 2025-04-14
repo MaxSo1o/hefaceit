@@ -13,15 +13,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 token.accessToken = account.access_token
             }
             return token
-        },
-        async session({ session, token }) {
-            session.user.accessToken = token.accessToken
-            return session
-        },
-        async redirect({ url, baseUrl }) {
-            if (url.startsWith("/")) return `${baseUrl}${url}`
-            else if (new URL(url).origin === baseUrl) return url
-            return baseUrl
         }
     }
 })
