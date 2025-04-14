@@ -6,7 +6,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         clientId: process.env.FACEIT_CLIENT_ID,
         clientSecret: process.env.FACEIT_CLIENT_SECRET
     })],
-    secret: process.env.AUTH_SECRET,
     callbacks: {
         async jwt({ token, account }) {
             if (account) {
