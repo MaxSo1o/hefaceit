@@ -1,18 +1,29 @@
-# Use an official Node.js runtime as the base image
+# Этап 1: Сборка проекта
 FROM node:18-alpine AS builder
 
-# Set the working directory in the container
-WORKDIR /hefaceit
+# Устанавливаем рабочую директорию
+WORKDIR /app
 
-# Copy package.json and package-lock.json (or yarn.lock)
+# Копируем package.json и package-lock.json
 COPY package*.json ./
 
-# Install dependencies (use yarn if you prefer)
-RUN npm install --frozen-lockfile
-# OR if using yarn: RUN yarn install --frozen-lockfile
+# Устанавливаем зависимости
+RUN npm install
 
-# Copy the rest of the application files
+# Копируем остальной исходный код
 COPY . .
 
-# Build the Next.js application
-RUN npm run dev
+# Собираем проект
+RUN npm run build
+
+# Этап 2: Запуск прод-сервера
+FROM node:18-alpine AS runner
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Порт, на котором будет запущено приложение
+EXPOSE 3000
+
+# Команда запуска
+RUN npm run start
