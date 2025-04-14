@@ -1,23 +1,41 @@
-FROM node:lts as dependencies
-WORKDIR /faceit
-COPY package.json package-lock.json ./
-RUN nmp install
+# Use an official Node.js runtime as the base image
+FROM node:18-alpine AS builder
 
-FROM node:lts as builder
-WORKDIR /faceit
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json (or yarn.lock)
+COPY package*.json ./
+COPY yarn.lock ./
+
+# Install dependencies (use yarn if you prefer)
+RUN npm install --frozen-lockfile
+# OR if using yarn: RUN yarn install --frozen-lockfile
+
+# Copy the rest of the application files
 COPY . .
-COPY --from=dependencies /faceit/node_modules ./node_modules
-RUN npm build
 
-FROM node:lts as runner
-WORKDIR /faceit
+# Build the Next.js application
+RUN npm run build
+# OR if using yarn: RUN yarn build
+
+# Use a smaller image for production
+FROM node:18-alpine AS runner
+WORKDIR /app
+
+# Copy only necessary files from builder
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/yarn.lock ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
+
+# Environment variables
 ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY --from=builder /faceit/public ./public
-COPY --from=builder /faceit/package.json ./package.json
-COPY --from=builder /faceit/.next ./.next
-COPY --from=builder /faceit/node_modules ./node_modules
-COPY --from=builder /faceit/app ./app
+# Expose the port the app runs on
+EXPOSE 3000
 
-EXPOSE 443
+# Command to run the application
 CMD ["npm", "start"]
