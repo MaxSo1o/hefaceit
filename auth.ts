@@ -8,15 +8,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     })],
     secret: process.env.AUTH_SECRET,
     callbacks: {
-        async jwt({ token, account }) {
-            if (account) {
-                token.accessToken = account.access_token
+        async jwt({ token, account, user }) {
+            // Переносим accessToken из account в token при первом входе
+            if (account?.access_token) {
+                token.accessToken = account.access_token;
             }
-            return token
+
+            // Также можно добавить accessToken из user, если он там есть
+            if (user?.accessToken) {
+                token.accessToken = user.accessToken;
+            }
+
+            return token;
         },
         async session({ session, token }) {
-            session.user.accessToken = token.accessToken
-            return session
-        }
+            // Добавляем accessToken в сессию
+            if (token.accessToken) {
+                session.accessToken = token.accessToken;
+            }
+
+            return session;
+        },
     }
 })
