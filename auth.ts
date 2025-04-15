@@ -11,7 +11,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     callbacks: {
         async jwt({ token, account, profile }) {
-            // Первоначальная авторизация - сохраняем данные от Faceit
+            console.log('jwt', token, account, profile)
             if (account) {
                 token.accessToken = account.access_token
                 token.expiresAt = account.expires_at
