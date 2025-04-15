@@ -15,7 +15,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 console.log(account)
                 token.accessToken = account.access_token
             }
-            return token
+            return account
         },
     },
 })
