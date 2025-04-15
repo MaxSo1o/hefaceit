@@ -1,7 +1,8 @@
-import Profile from "@/app/components/auth-components";
+import SignIn from "@/app/components/auth-components";
 
 export default function Layout() {
   return (
-      <Profile/>
+      // <Profile/>
+      <SignIn/>
   )
 }
