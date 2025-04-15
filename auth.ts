@@ -5,6 +5,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     providers: [FaceIt({
         clientId: process.env.FACEIT_CLIENT_ID,
         clientSecret: process.env.FACEIT_CLIENT_SECRET,
+        issuer: process.env.FACEIT_ISSUER
     })],
     session: {
         strategy: "jwt",
