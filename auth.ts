@@ -11,13 +11,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token: 'https://api.faceit.com/auth/v1/oauth/token',
         authorization: 'https://accounts.faceit.com'
     })],
+    session: {
+        strategy: "jwt",
+    },
     callbacks: {
-        async jwt({ token, account }) {
-            console.log ("jwt", token, account)
-            if (account) {
-                token.accessToken = account.access_token
+        async jwt({ token, trigger, session, account }) {
+            console.log ("jwt", token, trigger, session, account)
+            if (trigger === "update") token.name = session.user.name
+            if (account?.provider === "faceit") {
+                return { ...token, accessToken: account.access_token }
             }
             return token
         },
-    }
+        async session({ session, token }) {
+            if (token?.accessToken) session.accessToken = token.accessToken
+            return session
+        },
+    },
 })
