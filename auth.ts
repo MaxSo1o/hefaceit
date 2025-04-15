@@ -34,7 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return !!account;
         },
         async redirect({ url, baseUrl }) {
-            if (url.startsWith("/")) return `${baseUrl}${url}`
+            if (url.startsWith("https://hefaceit.ru")) return `${baseUrl}${url}`
             else if (new URL(url).origin === baseUrl) return url
             return baseUrl
         },
