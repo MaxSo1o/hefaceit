@@ -37,7 +37,7 @@ export default function SignIn() {
                 await signIn("faceit")
             }}
         >
-            <button type="submit">TEST1</button>
+            <button type="submit">TEST122</button>
         </form>
     )
 }
