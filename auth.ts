@@ -6,7 +6,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         clientId: process.env.FACEIT_CLIENT_ID,
         clientSecret: process.env.FACEIT_CLIENT_SECRET,
         issuer: process.env.FACEIT_ISSUER,
-        redirectProxyUrl: process.env.FACEIT_REDIRECT,
+        redirectProxyUrl: process.env.FACEIT_REDIRECT_PROXY_URL
     })],
     cookies: {
         sessionToken: {
