@@ -10,40 +10,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         strategy: "jwt",
     },
     callbacks: {
+        async signIn({ account, profile }) {
+            console.log("Sign in callback triggered");
+            return true;
+        },
         async jwt({ token, account, profile }) {
-            console.log('jwt', token, account, profile)
             if (account) {
-                token.accessToken = account.access_token
-                token.expiresAt = account.expires_at
-                token.refreshToken = account.refresh_token
-
-                // Добавляем данные профиля из Faceit
-                if (profile) {
-                    token.faceitId = profile.player_id
-                    token.avatar = profile.avatar
-                    token.nickname = profile.nickname
-                }
+                token.accessToken = account.access_token;
+                token.refreshToken = account.refresh_token;
+                token.providerAccountId = account.providerAccountId;
             }
-
-            // Здесь можно добавить логику обновления токена, если он истек
-            // ...
-
-            return token
+            return token;
         },
         async session({ session, token }) {
-            // Передаем данные из токена в сессию
-            session.accessToken = token.accessToken
-            session.user.faceitId = token.faceitId
-            session.user.image = token.avatar
-            session.user.name = token.nickname
-
-            return session
-        },
-        async redirect({ url, baseUrl }) {
-            // Обработка redirect после авторизации
-            if (url.startsWith("/")) return `${baseUrl}${url}`
-            else if (new URL(url).origin === baseUrl) return url
-            return baseUrl
+            session.accessToken = token.accessToken;
+            session.providerAccountId = token.providerAccountId;
+            return session;
         }
     }
+
 })
