@@ -14,7 +14,7 @@
     .box {
         width: 780px;
         height: 630px;
-        background-image: url('./public/media/background-auth.png');
+        background-image: url('media/background-auth.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-color: #1c1c1c;
