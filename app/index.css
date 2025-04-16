@@ -1,0 +1,91 @@
+#container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.auth-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+
+    .box {
+        width: 780px;
+        height: 630px;
+        background-image: url('./public/media/background-auth.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: #1c1c1c;
+        border: 3px solid #FF6A00;
+        border-radius: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 40px;
+        box-sizing: border-box;
+        line-height: 1;
+
+        .title {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 250px;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 50px;
+            text-align: center;
+        }
+
+        p {
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+        }
+    }
+
+    button {
+        width: 460px;
+        height: 100px;
+        border-radius: 10px;
+        background-color: #FF6A00;
+        color: #ffffff;
+        border: none;
+        font-size: 30px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #a64700;
+            color: #fff;
+        }
+    }
+}
+
+.header {
+    color: #fff;
+    text-align: center;
+    height: 70px;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .logo {
+        padding-left: 15px;
+        flex: 0;
+    }
+
+    .navigation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 50px;
+        flex: 2;
+    }
+}
