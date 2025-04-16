@@ -7,14 +7,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         clientSecret: process.env.FACEIT_CLIENT_SECRET,
         issuer: process.env.FACEIT_ISSUER,
     })],
-    cookies: {
-        sessionToken: {
-            name: "__Secure-next-auth.session-token",
-            options: {
-                httpOnly: true,
-            },
-        },
-    },
     session: {
         strategy: "jwt",
     },
