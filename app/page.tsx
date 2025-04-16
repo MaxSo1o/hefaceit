@@ -1,8 +1,7 @@
 import SignIn from "@/app/components/auth-components";
 
-export default function Layout() {
+export default function Home() {
   return (
-      // <Profile/>
       <SignIn/>
   )
 }
