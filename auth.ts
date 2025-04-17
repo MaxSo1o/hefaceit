@@ -40,9 +40,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
                 },
             }
         },
-        async signIn({ account }) {
-            return !!account
-        },
         async redirect({ url, baseUrl }) {
             if (url.startsWith("/dashboard")) return `${baseUrl}${url}`
             else if (new URL(url).origin === baseUrl) return url
