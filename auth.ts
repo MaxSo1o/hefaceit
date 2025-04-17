@@ -14,12 +14,31 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     callbacks: {
         async jwt({ token, account }) {
-            if (account) token.accessToken = account.access_token
-            return token
+            if (account) {
+                return {
+                    ...token,
+                    access_token: account.access_token,
+                    expires_at: account.expires_at,
+                    refresh_token: account.refresh_token,
+                }
+            } else if (Date.now() < token.expires_at * 1000) {
+                console.log('Токен еще актуален')
+                return token
+            } else {
+                console.log('Обновляем токен')
+                return token
+            }
         },
         async session({ session, token }) {
-            session.user.sessionToken = token.accessToken
-            return session
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    access_token: token.access_token,
+                    expires_at: token.expires_at,
+                    refresh_token: token.refresh_token,
+                },
+            }
         },
         async signIn({ account }) {
             return !!account

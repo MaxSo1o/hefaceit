@@ -1,6 +1,16 @@
-import {signOut} from "@/auth";
+import {auth, signOut} from "@/auth";
 
 export default function Dashboard() {
+    const session = auth()
+
+    if (!session) {
+        return (
+            <div className="auth-container">
+                Вы авторизованы
+            </div>
+        )
+    }
+
     return (
         <div className="auth-container">
             <div className="box">
