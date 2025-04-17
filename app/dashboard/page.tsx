@@ -6,7 +6,7 @@ export default function Dashboard() {
     if (!session) {
         return (
             <div className="auth-container">
-                Вы авторизованы
+                Вы авторизованы {session.user?.nickname}
             </div>
         )
     }
